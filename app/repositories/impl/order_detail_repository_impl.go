@@ -12,25 +12,25 @@ func NewOrderDetailRepositoryImpl() *OrderDetailRepositoryImpl {
 }
 
 func (r *OrderDetailRepositoryImpl) FindAll(db *gorm.DB, entities interface{}) error {
-	return db.Find(entities.(*[]models.Children)).Error
+	return db.Find(entities.(*[]models.OrderDetail)).Error
 }
 
 func (r *OrderDetailRepositoryImpl) FindById(db *gorm.DB, entity interface{}, id int) error {
-	return db.First(entity.(*models.Children), id).Error
+	return db.First(entity.(*models.OrderDetail), id).Error
 }
 
 func (r *OrderDetailRepositoryImpl) Create(db *gorm.DB, entity interface{}) error {
-	return db.Create(entity.(*models.Children)).Error
+	return db.Create(entity.(*models.OrderDetail)).Error
 }
 
 func (r *OrderDetailRepositoryImpl) NewRecord(db *gorm.DB, entity interface{}) bool {
-	return db.NewRecord(entity.(models.Children))
+	return db.NewRecord(entity.(models.OrderDetail))
 }
 
 func (r *OrderDetailRepositoryImpl) Update(db *gorm.DB, entity interface{}) error {
-	return db.Save(entity.(*models.Children)).Error
+	return db.Save(entity.(*models.OrderDetail)).Error
 }
 
 func (r *OrderDetailRepositoryImpl) Delete(db *gorm.DB, entity interface{}) error {
-	return db.Delete(entity.(*models.Children)).Error
+	return db.Delete(entity.(*models.OrderDetail)).Error
 }
