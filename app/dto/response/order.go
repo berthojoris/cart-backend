@@ -6,5 +6,5 @@ type Order struct {
 	TotalAmount string `json:"total_amount"`
 	CreatedBy int `json:"created_by"`
 	CreatedDate interface{} `json:"created_by"`
-	UpdateddDate interface{} `json:"created_by"`
+	UpdatedDate interface{} `json:"created_by"`
 }
