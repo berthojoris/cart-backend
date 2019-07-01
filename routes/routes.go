@@ -32,9 +32,13 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 
 	// repositories
 	itemRequestRepository := impl.NewItemRepositoryImpl()
+	orderRequestRepository := impl.NewOrderRepositoryImpl()
+	orderDetailRequestRepository := impl.NewOrderDetailRepositoryImpl()
 
 	// services
 	itemService := impl2.NewItemServiceImpl(itemRequestRepository)
+	orderService := impl2.NewOrderServiceImpl(orderRequestRepository)
+	orderDetailService := impl2.NewOrderDetailServiceImpl(orderDetailRequestRepository)
 
 	v1 := b.Party("/v1", r.CorsHandler).AllowMethods(iris.MethodOptions)
 	{
