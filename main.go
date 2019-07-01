@@ -24,7 +24,7 @@ func readConfig() {
 	if err != nil {
 		fmt.Println("Config file not found...")
 	} else {
-		viper.SetEnvPrefix("hr-api")
+		viper.SetEnvPrefix("cart-api")
 		viper.AllowEmptyEnv(true)
 		viper.AutomaticEnv()
 	}
