@@ -8,6 +8,9 @@ import (
 	"github.com/kataras/iris"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/berthojoris/cart-backend/app/models/Item"
+	"github.com/berthojoris/cart-backend/app/models/Order"
+	"github.com/berthojoris/cart-backend/app/models/OrderDetail"
 )
 
 type Database struct {
@@ -52,6 +55,7 @@ func (d *Database) Configure(app *iris.Application) {
 		app.Logger().Warn(err)
 		return
 	}
+	db.AutoMigrate(&Item{}, &Order{}, &OrderDetail{})
 	db = db.LogMode(true)
 
 	d.DB = db
