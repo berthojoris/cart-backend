@@ -33,19 +33,17 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 	b.Get("/", controllers.GetHomeHandler)
 
 	// repositories
-	anouncementRequestRepository := impl.NewAnouncementRepositoryImpl()
+	itemRequestRepository := impl.NewItemRepositoryImpl()
 
 	// services
-	anouncementService := impl2.NewAnouncementServiceImpl(anouncementRequestRepository)
+	itemService := impl2.NewItemServiceImpl(itemRequestRepository)
 
 	v1 := b.Party("/v1", r.CorsHandler).AllowMethods(iris.MethodOptions)
 	{
-		announcements := v1.Party("/announcements")
+		items := v1.Party("/items")
 		{
-			anouncementController := controllers.NewAnouncementController(r.Config.Database.DB, anouncementService)
-			announcements.Get("/", anouncementController.GetIndexHandler)
-			announcements.Post("/", anouncementController.CreateAnnouncementHandler)
-			announcements.Get("/{id:uint}/delete", anouncementController.DeleteAnnouncementHandler)
+			itemController := controllers.NewItemController(r.Config.Database.DB, itemService)
+			items.Get("/", itemController.GetIndexHandler)
 		}
 	}
 }
