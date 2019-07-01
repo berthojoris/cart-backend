@@ -14,13 +14,13 @@ func NewItemResponse(db *gorm.DB) ItemResponse {
 	return ItemResponse{Db: db}
 }
 
-func (r *ItemResponse) New(itemdata models.Item) response.Item {
+func (r *ItemResponse) New(item models.Item) response.Item {
 	response := response.Item{
-		ID: itemdata.ID,
-		ItemName: itemdata.ItemName,
-		ItemDescription: itemdata.ItemDescription,
-		Image: itemdata.Image,
-		Type: itemdata.Type,
+		ID:              item.ID,
+		ItemName:        item.ItemName,
+		ItemDescription: item.ItemDescription,
+		Image:           item.Image,
+		Type:            item.Type,
 	}
 
 	return response
@@ -29,8 +29,8 @@ func (r *ItemResponse) New(itemdata models.Item) response.Item {
 func (r *ItemResponse) Collection(items []models.Item) []response.Item {
 	var responses []response.Item
 
-	for _, itemdata := range items {
-		responses = append(responses, r.New(itemdata))
+	for _, item := range items {
+		responses = append(responses, r.New(item))
 	}
 
 	return responses
