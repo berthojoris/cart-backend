@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"git.pawoon.com/intern/hr-tools/bootstrap"
-	"git.pawoon.com/intern/hr-tools/config"
-	"git.pawoon.com/intern/hr-tools/routes"
+	"github.com/berthojoris/cart-backend/bootstrap"
+	"github.com/berthojoris/cart-backend/config"
+	"github.com/berthojoris/cart-backend/routes"
 	"github.com/spf13/viper"
 )
 
