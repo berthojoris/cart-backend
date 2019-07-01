@@ -8,9 +8,7 @@ import (
 	"github.com/kataras/iris"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/berthojoris/cart-backend/app/models/item"
-	"github.com/berthojoris/cart-backend/app/models/order"
-	"github.com/berthojoris/cart-backend/app/models/order_detail"
+	"github.com/berthojoris/cart-backend/app/models"
 )
 
 type Database struct {
