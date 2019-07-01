@@ -7,10 +7,10 @@ import (
 )
 
 type OrderServiceImpl struct {
-	OrderRepository _interface.IOrdeRepository
+	OrderRepository _interface.IOrderRepository
 }
 
-func NewOrderServiceImpl(OrderRepository _interface.IOrdeRepository) *OrderServiceImpl {
+func NewOrderServiceImpl(OrderRepository _interface.IOrderRepository) *OrderServiceImpl {
 	return &OrderServiceImpl{OrderRepository: OrderRepository}
 }
 
