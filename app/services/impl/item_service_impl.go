@@ -15,25 +15,25 @@ func NewItemServiceImpl(ItemRepository _interface.IItemRepository) *ItemServiceI
 }
 
 func (s *ItemServiceImpl) GetAll(db *gorm.DB, entities interface{}) error {
-	return s.ItemRepository.FindAll(db, entities.(*[]models.Children))
+	return s.ItemRepository.FindAll(db, entities.(*[]models.Item))
 }
 
 func (s *ItemServiceImpl) GetById(db *gorm.DB, entity interface{}, id int) error {
-	return s.ItemRepository.FindById(db, entity.(*models.Children), id)
+	return s.ItemRepository.FindById(db, entity.(*models.Item), id)
 }
 
 func (s *ItemServiceImpl) Create(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Create(db, entity.(*models.Children))
+	return s.ItemRepository.Create(db, entity.(*models.Item))
 }
 
 func (s *ItemServiceImpl) NewRecord(db *gorm.DB, entity interface{}) bool {
-	return s.ItemRepository.NewRecord(db, entity.(models.Children))
+	return s.ItemRepository.NewRecord(db, entity.(models.Item))
 }
 
 func (s *ItemServiceImpl) Update(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Update(db, entity.(*models.Children))
+	return s.ItemRepository.Update(db, entity.(*models.Item))
 }
 
 func (s *ItemServiceImpl) Delete(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Delete(db, entity.(*models.Children))
+	return s.ItemRepository.Delete(db, entity.(*models.Item))
 }

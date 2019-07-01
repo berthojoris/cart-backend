@@ -7,33 +7,33 @@ import (
 )
 
 type OrderServiceImpl struct {
-	ItemRepository _interface.IItemRepository
+	OrderRepository _interface.IOrdeRepository
 }
 
-func NewOrderServiceImpl(ItemRepository _interface.IItemRepository) *OrderServiceImpl {
-	return &OrderServiceImpl{ItemRepository: ItemRepository}
+func NewOrderServiceImpl(OrderRepository _interface.IOrdeRepository) *OrderServiceImpl {
+	return &OrderServiceImpl{OrderRepository: OrderRepository}
 }
 
 func (s *OrderServiceImpl) GetAll(db *gorm.DB, entities interface{}) error {
-	return s.ItemRepository.FindAll(db, entities.(*[]models.Children))
+	return s.OrderRepository.FindAll(db, entities.(*[]models.Order))
 }
 
 func (s *OrderServiceImpl) GetById(db *gorm.DB, entity interface{}, id int) error {
-	return s.ItemRepository.FindById(db, entity.(*models.Children), id)
+	return s.OrderRepository.FindById(db, entity.(*models.Order), id)
 }
 
 func (s *OrderServiceImpl) Create(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Create(db, entity.(*models.Children))
+	return s.OrderRepository.Create(db, entity.(*models.Order))
 }
 
 func (s *OrderServiceImpl) NewRecord(db *gorm.DB, entity interface{}) bool {
-	return s.ItemRepository.NewRecord(db, entity.(models.Children))
+	return s.OrderRepository.NewRecord(db, entity.(models.Order))
 }
 
 func (s *OrderServiceImpl) Update(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Update(db, entity.(*models.Children))
+	return s.OrderRepository.Update(db, entity.(*models.Order))
 }
 
 func (s *OrderServiceImpl) Delete(db *gorm.DB, entity interface{}) error {
-	return s.ItemRepository.Delete(db, entity.(*models.Children))
+	return s.OrderRepository.Delete(db, entity.(*models.Order))
 }
