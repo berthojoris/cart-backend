@@ -35,3 +35,21 @@ func (c *ItemController) GetIndexHandler(ctx iris.Context) {
 
 	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
 }
+
+func (c *ItemController) GetDetailHandler(ctx iris.Context) {
+	id, _ := ctx.Params().GetUint("id")
+
+	var detailItem models.Item
+	
+	c.ItemService.GetById(c.Db, &detailItem, int(id))
+
+	if detailItem == (models.Item{}) {
+		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Item doesn't exists.")
+		return
+	}
+
+	detailItemResponse := response.NewItemResponse(c.Db)
+	result := detailItemResponse.New(detailItem)
+
+	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
+}

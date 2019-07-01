@@ -42,6 +42,7 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 		{
 			itemController := controllers.NewItemController(r.Config.Database.DB, itemService)
 			items.Get("/", itemController.GetIndexHandler)
+			items.Get("/detail/{id:uint}", itemController.GetDetailHandler)
 		}
 	}
 }
