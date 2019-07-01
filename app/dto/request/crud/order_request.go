@@ -2,6 +2,7 @@ package crud
 
 import (
 	"github.com/berthojoris/cart-backend/app/dto/request"
+	_interface "github.com/berthojoris/cart-backend/app/services/interface"
 	"github.com/berthojoris/cart-backend/app/web/response"
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris"
@@ -16,15 +17,17 @@ type FormOrderRequest struct {
 }
 
 type OrderRequest struct {
-	Ctx  iris.Context
-	Db   *gorm.DB
-	Form FormOrderRequest
+	Ctx          iris.Context
+	Db           *gorm.DB
+	Form         FormOrderRequest
+	OrderService _interface.IOrderService
 }
 
-func NewOrderRequest(ctx iris.Context, db *gorm.DB) OrderRequest {
+func NewOrderRequest(ctx iris.Context, db *gorm.DB, orderService _interface.IOrderService) OrderRequest {
 	return OrderRequest{
-		Ctx: ctx,
-		Db:  db,
+		Ctx:          ctx,
+		Db:           db,
+		OrderService: orderService,
 	}
 }
 
