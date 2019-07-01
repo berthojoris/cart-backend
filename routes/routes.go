@@ -48,5 +48,11 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 			items.Get("/", itemController.GetIndexHandler)
 			items.Get("/detail/{id:uint}", itemController.GetDetailHandler)
 		}
+
+		order := v1.Party("/order")
+		{
+			orderController := controllers.NewOrderController(r.Config.Database.DB, orderService, orderDetailService)
+			order.Post("/save", orderController.SaveOrderHandler)
+		}
 	}
 }
