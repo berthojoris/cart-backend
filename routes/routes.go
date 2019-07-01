@@ -5,7 +5,6 @@ import (
 	impl2 "github.com/berthojoris/cart-backend/app/services/impl"
 	"github.com/berthojoris/cart-backend/app/utils"
 	"github.com/berthojoris/cart-backend/app/web/controllers"
-	"github.com/berthojoris/cart-backend/app/web/middleware"
 	"github.com/berthojoris/cart-backend/bootstrap"
 	"github.com/berthojoris/cart-backend/config"
 	"github.com/iris-contrib/middleware/cors"
