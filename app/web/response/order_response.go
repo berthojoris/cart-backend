@@ -17,7 +17,7 @@ func NewOrderResponse(db *gorm.DB) OrderResponse {
 func (r *OrderResponse) New(order models.Order) response.Order {
 	response := response.Order{
 		ID:          order.ID,
-		Orderid:     order.Orderid,
+		OrderId:     order.OrderId,
 		TotalAmount: order.TotalAmount,
 		CreatedBy:   order.CreatedBy,
 	}

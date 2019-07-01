@@ -11,7 +11,7 @@ import (
 
 type FormOrderRequest struct {
 	ID          *uint  `json:"id"`
-	Orderid     string `json:"order_id" validate:"required"`
+	OrderId     string `json:"order_id" validate:"required"`
 	TotalAmount string `json:"total_amount" validate:"required"`
 	CreatedBy   int    `json:"created_by" validate:"required"`
 }

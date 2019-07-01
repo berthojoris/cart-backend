@@ -40,7 +40,7 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 	var order models.Order
 
-	order.Orderid = formRequest.Form.Orderid
+	order.OrderId = formRequest.Form.OrderId
 	order.TotalAmount = formRequest.Form.TotalAmount
 
 	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, nil)
