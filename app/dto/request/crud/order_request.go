@@ -13,7 +13,6 @@ type FormOrderRequest struct {
 	ID          *uint  `json:"id"`
 	OrderId     string `json:"order_id" validate:"required"`
 	TotalAmount string `json:"total_amount" validate:"required"`
-	CreatedBy   int    `json:"created_by" validate:"required"`
 }
 
 type OrderRequest struct {

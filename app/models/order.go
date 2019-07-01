@@ -8,5 +8,4 @@ type Order struct {
 	gorm.Model
 	OrderId     string
 	TotalAmount string
-	CreatedBy   int
 }

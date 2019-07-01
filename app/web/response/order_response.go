@@ -19,7 +19,6 @@ func (r *OrderResponse) New(order models.Order) response.Order {
 		ID:          order.ID,
 		OrderId:     order.OrderId,
 		TotalAmount: order.TotalAmount,
-		CreatedBy:   order.CreatedBy,
 	}
 
 	return response
