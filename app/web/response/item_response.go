@@ -3,7 +3,6 @@ package response
 import (
 	"github.com/berthojoris/cart-backend/app/dto/response"
 	"github.com/berthojoris/cart-backend/app/models"
-	"github.com/berthojoris/cart-backend/app/utils"
 	"github.com/jinzhu/gorm"
 )
 
@@ -15,13 +14,13 @@ func NewItemResponse(db *gorm.DB) ItemResponse {
 	return ItemResponse{Db: db}
 }
 
-func (r *ItemResponse) New(item models.Item) response.Item {
+func (r *ItemResponse) New(itemdata models.Item) response.Item {
 	response := response.Item{
-		ID: item.ID,
-		ItemName: item.ItemName,
-		ItemDescription: item.ItemDescription,
-		Image: item.Image,
-		Type: item.Type,
+		ID: itemdata.ID,
+		ItemName: itemdata.ItemName,
+		ItemDescription: itemdata.ItemDescription,
+		Image: itemdata.Image,
+		Type: itemdata.Type,
 	}
 
 	return response
@@ -30,8 +29,8 @@ func (r *ItemResponse) New(item models.Item) response.Item {
 func (r *ItemResponse) Collection(items []models.Item) []response.Item {
 	var responses []response.Item
 
-	for _, children := range items {
-		responses = append(responses, r.New(item))
+	for _, itemdata := range items {
+		responses = append(responses, r.New(itemdata))
 	}
 
 	return responses
