@@ -53,7 +53,7 @@ func (d *Database) Configure(app *iris.Application) {
 		app.Logger().Warn(err)
 		return
 	}
-	db.AutoMigrate(&Item{}, &Order{}, &OrderDetail{})
+	db.AutoMigrate(&models.Item{}, &models.Order{}, &models.OrderDetail{})
 	db = db.LogMode(true)
 
 	d.DB = db
