@@ -12,6 +12,8 @@ type FormItemRequest struct {
 	ID *uint `json:"id"`
 	ItemName string `json:"item_name" validate:"required"`
 	ItemDescription string `json:"item_description" validate:"required"`
+	Image string `json:"image" validate:"required"`
+	Type string `json:"type" validate:"required"`
 }
 
 type ItemRequest struct {
