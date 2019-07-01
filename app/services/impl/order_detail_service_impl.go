@@ -10,7 +10,7 @@ type OrderDetailServiceImpl struct {
 	OrderDetailRepository _interface.IOrderDetailRepository
 }
 
-func NewOrderServiceImpl(OrderDetailRepository _interface.IOrderDetailRepository) *OrderDetailServiceImpl {
+func NewOrderDetailServiceImpl(OrderDetailRepository _interface.IOrderDetailRepository) *OrderDetailServiceImpl {
 	return &OrderDetailServiceImpl{OrderDetailRepository: OrderDetailRepository}
 }
 
