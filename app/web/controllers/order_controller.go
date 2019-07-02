@@ -5,7 +5,9 @@ import (
 	"github.com/berthojoris/cart-backend/app/models"
 	_interface "github.com/berthojoris/cart-backend/app/services/interface"
 	"github.com/berthojoris/cart-backend/app/web/response"
+	copier "github.com/jinzhu/copier"
 	"github.com/jinzhu/gorm"
+	golog "github.com/kataras/golog"
 	"github.com/kataras/iris"
 )
 
@@ -27,7 +29,17 @@ func NewOrderController(
 }
 
 func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
-	formRequest := order_request.NewOrderRequest(ctx, c.Db, c.OrderService)
+
+	tx := c.Db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			response.InternalServerErrorResponse(ctx, r)
+			return
+		}
+	}()
+
+	formRequest := order_request.NewOrderRequest(ctx, c.Db, c.OrderService, c.OrderDetailService)
 
 	if err := ctx.ReadJSON(&formRequest.Form); err != nil {
 		response.InternalServerErrorResponse(ctx, err)
@@ -40,10 +52,37 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 	var order models.Order
 
+	golog.Info(order)
+
 	order.OrderId = formRequest.Form.OrderId
 	order.TotalAmount = formRequest.Form.TotalAmount
 
-	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, nil)
+	if err := c.OrderService.Create(c.Db, &order); err != nil {
+		tx.Rollback()
+		response.InternalServerErrorResponse(ctx, err)
+		return
+	}
+
+	if formRequest.Form.OrderDetail != nil && len(formRequest.Form.OrderDetail) > 0 {
+		for _, orderDetailRequest := range formRequest.Form.OrderDetail {
+			var detailOrder models.OrderDetail
+
+			copier.Copy(&detailOrder, &orderDetailRequest)
+
+			detailOrder.DetailOrderid = int(formRequest.Form.OrderId)
+
+			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
+				tx.Rollback()
+				response.InternalServerErrorResponse(ctx, err)
+				return
+			}
+		}
+	}
+
+	golog.Info(order)
+
+	tx.Commit()
+	response.SuccessResponse(ctx, response.OK, response.SUCCESS_SAVE_ORDER, nil)
 }
 
 func (c *OrderController) GetOrderHandler(ctx iris.Context) {

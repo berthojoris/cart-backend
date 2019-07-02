@@ -10,23 +10,26 @@ import (
 )
 
 type FormOrderRequest struct {
-	ID          *uint  `json:"id"`
-	OrderId     string `json:"order_id" validate:"required"`
-	TotalAmount string `json:"total_amount" validate:"required"`
+	ID          *uint                    `json:"id"`
+	OrderId     uint                     `json:"order_id" validate:"required"`
+	TotalAmount uint                     `json:"total_amount" validate:"required"`
+	OrderDetail []FormOrderDetailRequest `json:"detail" validate:"required,dive"`
 }
 
 type OrderRequest struct {
-	Ctx          iris.Context
-	Db           *gorm.DB
-	Form         FormOrderRequest
-	OrderService _interface.IOrderService
+	Ctx                iris.Context
+	Db                 *gorm.DB
+	Form               FormOrderRequest
+	OrderService       _interface.IOrderService
+	OrderDetailService _interface.IOrderDetailService
 }
 
-func NewOrderRequest(ctx iris.Context, db *gorm.DB, orderService _interface.IOrderService) OrderRequest {
+func NewOrderRequest(ctx iris.Context, db *gorm.DB, orderService _interface.IOrderService, orderDetailService _interface.IOrderDetailService) OrderRequest {
 	return OrderRequest{
-		Ctx:          ctx,
-		Db:           db,
-		OrderService: orderService,
+		Ctx:                ctx,
+		Db:                 db,
+		OrderService:       orderService,
+		OrderDetailService: orderDetailService,
 	}
 }
 

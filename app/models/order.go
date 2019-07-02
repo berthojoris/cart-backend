@@ -6,6 +6,6 @@ import (
 
 type Order struct {
 	gorm.Model
-	OrderId     string
-	TotalAmount string
+	OrderId     uint
+	TotalAmount uint
 }

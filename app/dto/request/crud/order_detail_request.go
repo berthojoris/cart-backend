@@ -9,22 +9,22 @@ import (
 )
 
 type FormOrderDetailRequest struct {
-	ID *uint `json:"id"`
-	DetailOrderid string `json:"detail_order_id" validate:"required"`
-	ItemId int `json:"item_id" validate:"required"`
-	Qty int `json:"qty" validate:"required"`
+	ID            *uint `json:"id"`
+	DetailOrderid int   `json:"detail_order_id" validate:"required"`
+	ItemId        int   `json:"item_id" validate:"required"`
+	Qty           int   `json:"qty" validate:"required"`
 }
 
 type OrderDetailRequest struct {
-	Ctx iris.Context
-	Db *gorm.DB
+	Ctx  iris.Context
+	Db   *gorm.DB
 	Form FormOrderDetailRequest
 }
 
 func NewOrderDetailRequest(ctx iris.Context, db *gorm.DB) OrderDetailRequest {
 	return OrderDetailRequest{
 		Ctx: ctx,
-		Db: db,
+		Db:  db,
 	}
 }
 
