@@ -69,7 +69,7 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 			copier.Copy(&detailOrder, &orderDetailRequest)
 
-			detailOrder.DetailOrderid = int(formRequest.Form.OrderId)
+			detailOrder.DetailOrderid = formRequest.Form.OrderId
 
 			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
 				tx.Rollback()
