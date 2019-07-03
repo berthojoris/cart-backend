@@ -6,6 +6,5 @@ import (
 
 type Order struct {
 	gorm.Model
-	OrderId     int
 	TotalAmount uint
 }

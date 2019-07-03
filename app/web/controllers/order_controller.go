@@ -54,7 +54,6 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 	golog.Info(order)
 
-	order.OrderId = formRequest.Form.OrderId
 	order.TotalAmount = formRequest.Form.TotalAmount
 
 	if err := c.OrderService.Create(c.Db, &order); err != nil {
@@ -69,7 +68,7 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 			copier.Copy(&detailOrder, &orderDetailRequest)
 
-			detailOrder.DetailOrderid = formRequest.Form.OrderId
+			detailOrder.OrderId = int(*formRequest.Form.ID)
 
 			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
 				tx.Rollback()
