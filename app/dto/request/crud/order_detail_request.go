@@ -9,10 +9,10 @@ import (
 )
 
 type FormOrderDetailRequest struct {
-	ID            *uint  `json:"id"`
+	ID      int `json:"id"`
 	Orderid int `json:"order_id"`
-	ItemId        int    `json:"item_id" validate:"required"`
-	Qty           int    `json:"qty" validate:"required"`
+	ItemId  int `json:"item_id"`
+	Qty     int `json:"qty"`
 }
 
 type OrderDetailRequest struct {

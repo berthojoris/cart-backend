@@ -66,8 +66,8 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 			var detailOrder models.OrderDetail
 
 			detailOrder.OrderId = int(order.ID)
-			detailOrder.ItemId = orderDetailRequest.ItemId
-			detailOrder.Qty = orderDetailRequest.Qty
+			detailOrder.ItemId = orderDetailRequest.ID
+			detailOrder.Qty = 1
 
 			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
 				tx.Rollback()
