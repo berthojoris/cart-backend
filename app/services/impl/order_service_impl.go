@@ -2,7 +2,7 @@ package impl
 
 import (
 	"github.com/berthojoris/cart-backend/app/models"
-	"github.com/berthojoris/cart-backend/app/repositories/interface"
+	_interface "github.com/berthojoris/cart-backend/app/repositories/interface"
 	"github.com/jinzhu/gorm"
 )
 

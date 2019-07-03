@@ -10,7 +10,7 @@ import (
 
 type FormOrderDetailRequest struct {
 	ID            *uint  `json:"id"`
-	DetailOrderid string `json:"detail_order_id"`
+	DetailOrderid int `json:"detail_order_id"`
 	ItemId        int    `json:"item_id" validate:"required"`
 	Qty           int    `json:"qty" validate:"required"`
 }

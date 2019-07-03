@@ -79,10 +79,28 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 		}
 	}
 
-	golog.Info(order)
-
 	tx.Commit()
 	response.SuccessResponse(ctx, response.OK, response.SUCCESS_SAVE_ORDER, nil)
+}
+
+func (c *OrderController) GetOrderRelationHandler(ctx iris.Context) {
+	id, _ := ctx.Params().GetUint("id")
+
+	var order models.Order
+
+	c.OrderService.GetById(c.Db, &order, int(id))
+
+	if order == (models.Order{}) {
+		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Item doesn't exists.")
+		return
+	}
+
+	golog.Info(order)
+
+	detailOrderResponse := response.NewOrderResponse(c.Db)
+	result := detailOrderResponse.New(order)
+
+	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
 }
 
 func (c *OrderController) GetOrderHandler(ctx iris.Context) {

@@ -6,7 +6,7 @@ import (
 
 type OrderDetail struct {
 	gorm.Model
-	DetailOrderid string
+	DetailOrderid int
 	ItemId        int
 	Qty           int
 }

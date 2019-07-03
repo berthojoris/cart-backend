@@ -53,6 +53,7 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 		{
 			orderController := controllers.NewOrderController(r.Config.Database.DB, orderService, orderDetailService)
 			order.Post("/save", orderController.SaveOrderHandler)
+			order.Get("/update/{id:uint}", orderController.GetOrderRelationHandler)
 		}
 	}
 }
