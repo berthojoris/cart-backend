@@ -122,6 +122,22 @@ func (c *OrderController) UpdateOrderByIdHandler(ctx iris.Context) {
 
 	c.OrderDetailService.RemoveByOrderId(c.Db, &orderDetail, id)
 
+	if formRequest.Form.OrderDetail != nil && len(formRequest.Form.OrderDetail) > 0 {
+		for _, orderDetailRequest := range formRequest.Form.OrderDetail {
+			var detailOrder models.OrderDetail
+
+			detailOrder.OrderId = int(id)
+			detailOrder.ItemId = orderDetailRequest.ItemId
+			detailOrder.Qty = orderDetailRequest.Qty
+
+			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
+				tx.Rollback()
+				response.InternalServerErrorResponse(ctx, err)
+				return
+			}
+		}
+	}
+
 	orderDetailResponse := response.NewOrderDetailResponse(c.Db)
 	result := orderDetailResponse.Collection(orderDetail)
 
