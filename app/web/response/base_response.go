@@ -53,7 +53,8 @@ const (
 	SERVICE_UNAVAILABLE_MESSAGE   = "Service Unavailable"
 	GATEWAY_TIMEOUT_MESSAGE       = "Gateway Timeout"
 	SUCCESS_SAVE_ORDER            = "Your order has been Created"
-	SUCCESS_UPDATE_ORDER            = "Your order has been updated"
+	SUCCESS_UPDATE_ORDER          = "Your order has been updated"
+	SUCCESS_DELETE_ORDER          = "Your order has been deleted"
 )
 
 func SuccessResponse(ctx iris.Context, status int, message string, data interface{}) {

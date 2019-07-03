@@ -14,6 +14,10 @@ func NewOrderServiceImpl(OrderRepository _interface.IOrderRepository) *OrderServ
 	return &OrderServiceImpl{OrderRepository: OrderRepository}
 }
 
+func (s *OrderServiceImpl) RemoveByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return s.OrderRepository.DeleteByOrderId(db, entities.(*models.Order), Id)
+}
+
 func (s *OrderServiceImpl) GetAll(db *gorm.DB, entities interface{}) error {
 	return s.OrderRepository.FindAll(db, entities.(*[]models.Order))
 }

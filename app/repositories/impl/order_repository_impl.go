@@ -5,10 +5,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type OrderRepositoryImpl struct {}
+type OrderRepositoryImpl struct{}
 
 func NewOrderRepositoryImpl() *OrderRepositoryImpl {
 	return &OrderRepositoryImpl{}
+}
+
+func (r *OrderRepositoryImpl) DeleteByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return db.Where("id = ?", Id).Delete(entities.(*models.Order)).Error
 }
 
 func (r *OrderRepositoryImpl) FindAll(db *gorm.DB, entities interface{}) error {

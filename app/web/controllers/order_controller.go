@@ -81,6 +81,36 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 	response.SuccessResponse(ctx, response.OK, response.SUCCESS_SAVE_ORDER, nil)
 }
 
+func (c *OrderController) DeleteOrderByIdHandler(ctx iris.Context) {
+
+	tx := c.Db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			response.InternalServerErrorResponse(ctx, r)
+			return
+		}
+	}()
+
+	id, _ := ctx.Params().GetUint("id")
+
+	var order models.Order
+	var orderDetail []models.OrderDetail
+
+	c.OrderService.GetById(c.Db, &order, int(id))
+
+	if order == (models.Order{}) {
+		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Order doesn't exists.")
+		return
+	}
+
+	c.OrderService.RemoveByOrderId(c.Db, &order, id)
+	c.OrderDetailService.RemoveByOrderId(c.Db, &orderDetail, id)
+
+	tx.Commit()
+	response.SuccessResponse(ctx, response.OK, response.SUCCESS_DELETE_ORDER, nil)
+}
+
 func (c *OrderController) UpdateOrderByIdHandler(ctx iris.Context) {
 
 	tx := c.Db.Begin()
@@ -98,6 +128,10 @@ func (c *OrderController) UpdateOrderByIdHandler(ctx iris.Context) {
 
 	if err := ctx.ReadJSON(&formRequest.Form); err != nil {
 		response.InternalServerErrorResponse(ctx, err)
+		return
+	}
+
+	if !formRequest.Validate() {
 		return
 	}
 
