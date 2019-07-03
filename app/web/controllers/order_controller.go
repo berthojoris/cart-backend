@@ -192,6 +192,22 @@ func (c *OrderController) GetOrderDetailByIdHandler(ctx iris.Context) {
 	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
 }
 
+func (c *OrderController) ListOrderHandler(ctx iris.Context) {
+	var order []models.Order
+
+	c.OrderService.GetAll(c.Db, &order)
+
+	if len(order) == 0 {
+		response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, make([]interface{}, 0))
+		return
+	}
+
+	orderResponse := response.NewOrderResponse(c.Db)
+	result := orderResponse.Collection(order)
+
+	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
+}
+
 func (c *OrderController) GetOrderByIdHandler(ctx iris.Context) {
 	id, _ := ctx.Params().GetUint("id")
 

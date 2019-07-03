@@ -52,6 +52,7 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 		order := v1.Party("/order")
 		{
 			orderController := controllers.NewOrderController(r.Config.Database.DB, orderService, orderDetailService)
+			order.Get("/list", orderController.ListOrderHandler)
 			order.Post("/save", orderController.SaveOrderHandler)
 			order.Get("/{id:uint}", orderController.GetOrderByIdHandler)
 			order.Get("/detail/{id:uint}", orderController.GetOrderDetailByIdHandler)
