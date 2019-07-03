@@ -8,4 +8,5 @@ import (
 type IOrderDetailRepository interface {
 	repositories.BaseRepository
 	FindByOrderId(db *gorm.DB, entities interface{}, Id uint) error
+	DeleteByOrderId(db *gorm.DB, entities interface{}, Id uint) error
 }

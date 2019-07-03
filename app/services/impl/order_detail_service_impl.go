@@ -14,6 +14,10 @@ func NewOrderDetailServiceImpl(OrderDetailRepository _interface.IOrderDetailRepo
 	return &OrderDetailServiceImpl{OrderDetailRepository: OrderDetailRepository}
 }
 
+func (s *OrderDetailServiceImpl) RemoveByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return s.OrderDetailRepository.DeleteByOrderId(db, entities.(*[]models.OrderDetail), Id)
+}
+
 func (s *OrderDetailServiceImpl) GetByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
 	return s.OrderDetailRepository.FindByOrderId(db, entities.(*[]models.OrderDetail), Id)
 }

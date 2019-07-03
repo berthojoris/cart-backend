@@ -120,6 +120,8 @@ func (c *OrderController) UpdateOrderByIdHandler(ctx iris.Context) {
 		return
 	}
 
+	c.OrderDetailService.RemoveByOrderId(c.Db, &orderDetail, id)
+
 	orderDetailResponse := response.NewOrderDetailResponse(c.Db)
 	result := orderDetailResponse.Collection(orderDetail)
 

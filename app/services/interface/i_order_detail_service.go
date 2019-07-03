@@ -8,4 +8,5 @@ import (
 type IOrderDetailService interface {
 	services.BaseService
 	GetByOrderId(db *gorm.DB, entities interface{}, Id uint) error
+	RemoveByOrderId(db *gorm.DB, entities interface{}, Id uint) error
 }

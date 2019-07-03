@@ -11,6 +11,10 @@ func NewOrderDetailRepositoryImpl() *OrderDetailRepositoryImpl {
 	return &OrderDetailRepositoryImpl{}
 }
 
+func (r *OrderDetailRepositoryImpl) DeleteByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return db.Where("order_id = ?", Id).Delete(entities.(*[]models.OrderDetail)).Error
+}
+
 func (r *OrderDetailRepositoryImpl) FindByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
 	return db.Where("order_id = ?", Id).Find(entities.(*[]models.OrderDetail)).Error
 }
