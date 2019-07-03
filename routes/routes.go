@@ -55,6 +55,7 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 			order.Post("/save", orderController.SaveOrderHandler)
 			order.Get("/{id:uint}", orderController.GetOrderByIdHandler)
 			order.Get("/detail/{id:uint}", orderController.GetOrderDetailByIdHandler)
+			order.Patch("/update/{id:uint}", orderController.UpdateOrderByIdHandler)
 		}
 	}
 }

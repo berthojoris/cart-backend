@@ -81,6 +81,52 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 	response.SuccessResponse(ctx, response.OK, response.SUCCESS_SAVE_ORDER, nil)
 }
 
+func (c *OrderController) UpdateOrderByIdHandler(ctx iris.Context) {
+
+	tx := c.Db.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			response.InternalServerErrorResponse(ctx, r)
+			return
+		}
+	}()
+
+	id, _ := ctx.Params().GetUint("id")
+
+	formRequest := order_request.NewOrderRequest(ctx, c.Db, c.OrderService, c.OrderDetailService)
+
+	if err := ctx.ReadJSON(&formRequest.Form); err != nil {
+		response.InternalServerErrorResponse(ctx, err)
+		return
+	}
+
+	var order models.Order
+	var orderDetail []models.OrderDetail
+
+	c.OrderService.GetById(c.Db, &order, int(id))
+
+	if order == (models.Order{}) {
+		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Order doesn't exists.")
+		return
+	}
+
+	c.OrderDetailService.GetByOrderId(c.Db, &orderDetail, id)
+
+	order.TotalAmount = formRequest.Form.TotalAmount
+
+	if err := c.OrderService.Update(c.Db, &order); err != nil {
+		response.InternalServerErrorResponse(ctx, err)
+		return
+	}
+
+	orderDetailResponse := response.NewOrderDetailResponse(c.Db)
+	result := orderDetailResponse.Collection(orderDetail)
+
+	tx.Commit()
+	response.SuccessResponse(ctx, response.OK, response.SUCCESS_UPDATE_ORDER, result)
+}
+
 func (c *OrderController) GetOrderDetailByIdHandler(ctx iris.Context) {
 	id, _ := ctx.Params().GetUint("id")
 
