@@ -21,6 +21,7 @@ func (r *ItemResponse) New(item models.Item) response.Item {
 		ItemDescription: item.ItemDescription,
 		Image:           item.Image,
 		Type:            item.Type,
+		Price:           item.Price,
 	}
 
 	return response

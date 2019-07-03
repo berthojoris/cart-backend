@@ -5,7 +5,6 @@ import (
 	"github.com/berthojoris/cart-backend/app/models"
 	_interface "github.com/berthojoris/cart-backend/app/services/interface"
 	"github.com/berthojoris/cart-backend/app/web/response"
-	copier "github.com/jinzhu/copier"
 	"github.com/jinzhu/gorm"
 	golog "github.com/kataras/golog"
 	"github.com/kataras/iris"
@@ -52,7 +51,7 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 
 	var order models.Order
 
-	golog.Info(order)
+	golog.Info(formRequest)
 
 	order.TotalAmount = formRequest.Form.TotalAmount
 
@@ -66,9 +65,9 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 		for _, orderDetailRequest := range formRequest.Form.OrderDetail {
 			var detailOrder models.OrderDetail
 
-			copier.Copy(&detailOrder, &orderDetailRequest)
-
-			detailOrder.OrderId = int(*formRequest.Form.ID)
+			detailOrder.OrderId = int(order.ID)
+			detailOrder.ItemId = orderDetailRequest.ItemId
+			detailOrder.Qty = orderDetailRequest.Qty
 
 			if err := c.OrderDetailService.Create(tx, &detailOrder); err != nil {
 				tx.Rollback()

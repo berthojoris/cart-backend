@@ -9,23 +9,24 @@ import (
 )
 
 type FormItemRequest struct {
-	ID *uint `json:"id"`
-	ItemName string `json:"item_name" validate:"required"`
+	ID              *uint  `json:"id"`
+	ItemName        string `json:"item_name" validate:"required"`
 	ItemDescription string `json:"item_description" validate:"required"`
-	Image string `json:"image" validate:"required"`
-	Type string `json:"type" validate:"required"`
+	Image           string `json:"image" validate:"required"`
+	Type            string `json:"type" validate:"required"`
+	Price           string `json:"price" validate:"required"`
 }
 
 type ItemRequest struct {
-	Ctx iris.Context
-	Db *gorm.DB
+	Ctx  iris.Context
+	Db   *gorm.DB
 	Form FormItemRequest
 }
 
 func NewItemRequest(ctx iris.Context, db *gorm.DB) ItemRequest {
 	return ItemRequest{
 		Ctx: ctx,
-		Db: db,
+		Db:  db,
 	}
 }
 

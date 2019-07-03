@@ -6,8 +6,9 @@ import (
 
 type Item struct {
 	gorm.Model
-	ItemName string
+	ItemName        string
 	ItemDescription string
-	Image string
-	Type string
+	Image           string
+	Type            string
+	Price           int
 }
