@@ -81,20 +81,30 @@ func (c *OrderController) SaveOrderHandler(ctx iris.Context) {
 	response.SuccessResponse(ctx, response.OK, response.SUCCESS_SAVE_ORDER, nil)
 }
 
-func (c *OrderController) GetOrderRelationHandler(ctx iris.Context) {
+func (c *OrderController) GetOrderDetailByIdHandler(ctx iris.Context) {
+	id, _ := ctx.Params().GetUint("id")
+
+	var orderDetail []models.OrderDetail
+
+	c.OrderDetailService.GetByOrderId(c.Db, &orderDetail, id)
+
+	orderDetailResponse := response.NewOrderDetailResponse(c.Db)
+	result := orderDetailResponse.Collection(orderDetail)
+
+	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
+}
+
+func (c *OrderController) GetOrderByIdHandler(ctx iris.Context) {
 	id, _ := ctx.Params().GetUint("id")
 
 	var order models.Order
-	var orderDetail []models.OrderDetail
 
 	c.OrderService.GetById(c.Db, &order, int(id))
 
 	if order == (models.Order{}) {
-		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Item doesn't exists.")
+		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Order doesn't exists.")
 		return
 	}
-
-	golog.Info(orderDetail)
 
 	orderResponse := response.NewOrderResponse(c.Db)
 	result := orderResponse.New(order)

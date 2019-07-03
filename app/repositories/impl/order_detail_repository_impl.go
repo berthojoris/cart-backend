@@ -12,7 +12,7 @@ func NewOrderDetailRepositoryImpl() *OrderDetailRepositoryImpl {
 }
 
 func (r *OrderDetailRepositoryImpl) FindByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
-	return db.Where("detail_orderid = ?", Id).Find(entities.(*[]models.OrderDetail)).Error
+	return db.Where("order_id = ?", Id).Find(entities.(*[]models.OrderDetail)).Error
 }
 
 func (r *OrderDetailRepositoryImpl) FindAll(db *gorm.DB, entities interface{}) error {
