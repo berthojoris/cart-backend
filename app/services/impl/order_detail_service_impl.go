@@ -2,7 +2,7 @@ package impl
 
 import (
 	"github.com/berthojoris/cart-backend/app/models"
-	"github.com/berthojoris/cart-backend/app/repositories/interface"
+	_interface "github.com/berthojoris/cart-backend/app/repositories/interface"
 	"github.com/jinzhu/gorm"
 )
 
@@ -12,6 +12,10 @@ type OrderDetailServiceImpl struct {
 
 func NewOrderDetailServiceImpl(OrderDetailRepository _interface.IOrderDetailRepository) *OrderDetailServiceImpl {
 	return &OrderDetailServiceImpl{OrderDetailRepository: OrderDetailRepository}
+}
+
+func (s *OrderDetailServiceImpl) GetByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return s.OrderDetailRepository.FindByOrderId(db, entities.(*[]models.OrderDetail), Id)
 }
 
 func (s *OrderDetailServiceImpl) GetAll(db *gorm.DB, entities interface{}) error {

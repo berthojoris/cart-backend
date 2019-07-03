@@ -22,6 +22,10 @@ func (s *OrderServiceImpl) GetById(db *gorm.DB, entity interface{}, id int) erro
 	return s.OrderRepository.FindById(db, entity.(*models.Order), id)
 }
 
+func (s *OrderServiceImpl) GetByOrderId(db *gorm.DB, entity interface{}, id int) error {
+	return s.OrderRepository.FindById(db, entity.(*models.Order), id)
+}
+
 func (s *OrderServiceImpl) Create(db *gorm.DB, entity interface{}) error {
 	return s.OrderRepository.Create(db, entity.(*models.Order))
 }

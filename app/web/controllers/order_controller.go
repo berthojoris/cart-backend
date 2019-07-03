@@ -86,15 +86,18 @@ func (c *OrderController) GetOrderRelationHandler(ctx iris.Context) {
 	id, _ := ctx.Params().GetUint("id")
 
 	var order models.Order
+	var orderDetail []models.OrderDetail
 
 	c.OrderService.GetById(c.Db, &order, int(id))
+
+	var ordxDetail = c.OrderDetailService.GetByOrderId(c.Db, &orderDetail, id)
 
 	if order == (models.Order{}) {
 		response.ErrorResponse(ctx, response.UNPROCESSABLE_ENTITY, "Item doesn't exists.")
 		return
 	}
 
-	golog.Info(order)
+	golog.Info(ordxDetail)
 
 	orderResponse := response.NewOrderResponse(c.Db)
 	result := orderResponse.New(order)

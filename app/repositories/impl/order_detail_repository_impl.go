@@ -5,10 +5,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type OrderDetailRepositoryImpl struct {}
+type OrderDetailRepositoryImpl struct{}
 
 func NewOrderDetailRepositoryImpl() *OrderDetailRepositoryImpl {
 	return &OrderDetailRepositoryImpl{}
+}
+
+func (r *OrderDetailRepositoryImpl) FindByOrderId(db *gorm.DB, entities interface{}, Id uint) error {
+	return db.Where("detail_orderid = ?", Id).Find(entities.(*[]models.OrderDetail)).Error
 }
 
 func (r *OrderDetailRepositoryImpl) FindAll(db *gorm.DB, entities interface{}) error {
