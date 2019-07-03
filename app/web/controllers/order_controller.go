@@ -96,8 +96,8 @@ func (c *OrderController) GetOrderRelationHandler(ctx iris.Context) {
 
 	golog.Info(order)
 
-	detailOrderResponse := response.NewOrderResponse(c.Db)
-	result := detailOrderResponse.New(order)
+	orderResponse := response.NewOrderResponse(c.Db)
+	result := orderResponse.New(order)
 
 	response.SuccessResponse(ctx, response.OK, response.OK_MESSAGE, result)
 }

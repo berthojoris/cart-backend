@@ -3,6 +3,7 @@ package response
 import (
 	"github.com/berthojoris/cart-backend/app/dto/response"
 	"github.com/berthojoris/cart-backend/app/models"
+	copier "github.com/jinzhu/copier"
 	"github.com/jinzhu/gorm"
 )
 
@@ -15,10 +16,25 @@ func NewOrderResponse(db *gorm.DB) OrderResponse {
 }
 
 func (r *OrderResponse) New(order models.Order) response.Order {
-	response := response.Order{
-		ID:          order.ID,
-		TotalAmount: order.TotalAmount,
+
+	orderDetailResponse := NewOrderDetailResponse(r.Db)
+
+	var response response.Order
+	copier.Copy(&response, &order)
+
+	var orderDetail models.OrderDetail
+
+	r.Db.Model(&order).Related(&orderDetail)
+
+	if orderDetail != (models.OrderDetail{}) {
+		orderDetailResponse2 := orderDetailResponse.New(orderDetail)
+		response.OrderDetail = orderDetailResponse2
 	}
+
+	// response := response.Order{
+	// 	ID:          order.ID,
+	// 	TotalAmount: order.TotalAmount,
+	// }
 
 	return response
 }

@@ -10,8 +10,8 @@ type OrderDetailResponse struct {
 	Db *gorm.DB
 }
 
-func NewOrderDetailResponse(db *gorm.DB) OrderResponse {
-	return OrderResponse{Db: db}
+func NewOrderDetailResponse(db *gorm.DB) OrderDetailResponse {
+	return OrderDetailResponse{Db: db}
 }
 
 func (r *OrderDetailResponse) New(orderDetail models.OrderDetail) response.OrderDetail {
