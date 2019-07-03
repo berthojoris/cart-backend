@@ -57,7 +57,7 @@ func (r *Route) Configure(b *bootstrap.Bootstrapper) {
 			order.Get("/{id:uint}", orderController.GetOrderByIdHandler)
 			order.Get("/detail/{id:uint}", orderController.GetOrderDetailByIdHandler)
 			order.Patch("/update/{id:uint}", orderController.UpdateOrderByIdHandler)
-			order.Delete("/delete/{id:uint}", orderController.DeleteOrderByIdHandler)
+			order.Get("/delete/{id:uint}", orderController.DeleteOrderByIdHandler)
 		}
 	}
 }
