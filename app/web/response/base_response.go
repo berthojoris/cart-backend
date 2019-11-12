@@ -2,7 +2,7 @@ package response
 
 import (
 	"github.com/berthojoris/cart-backend/app/dto/response"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/pkg/errors"
 )
 
