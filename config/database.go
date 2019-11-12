@@ -5,7 +5,7 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/berthojoris/cart-backend/app/models"

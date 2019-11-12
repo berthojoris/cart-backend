@@ -1,34 +1,33 @@
 package bootstrap
 
 import (
-	"github.com/berthojoris/cart-backend/app/web/response"
-	"github.com/gorilla/securecookie"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
-	"github.com/kataras/iris/middleware/logger"
-	"github.com/kataras/iris/middleware/recover"
-	"github.com/kataras/iris/sessions"
-	"github.com/kataras/iris/websocket"
 	"time"
+
+	"github.com/berthojoris/cart-backend/app/web/response"
+
+	"github.com/gorilla/securecookie"
+	"github.com/kataras/iris/v12/middleware/logger"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/middleware/recover"
+	"github.com/kataras/iris/v12/sessions"
 )
 
 type Configurator func(bootstrapper *Bootstrapper)
 
 type Bootstrapper struct {
 	*iris.Application
-	AppName string
-	AppOwner string
+	AppName      string
+	AppOwner     string
 	AppSpawnDate time.Time
-	Sessions *sessions.Sessions
-
+	Sessions     *sessions.Sessions
 }
 
 // New returns a new Bootstrapper
 func New(appName, appOwner string, cfgs ...Configurator) *Bootstrapper {
 	b := &Bootstrapper{
-		Application: iris.New(),
-		AppName: appName,
-		AppOwner: appOwner,
+		Application:  iris.New(),
+		AppName:      appName,
+		AppOwner:     appOwner,
 		AppSpawnDate: time.Now(),
 	}
 
@@ -47,27 +46,16 @@ func (b *Bootstrapper) SetupViews(viewsDir string) {
 // SetupSessions initializes the sessions, optionally
 func (b *Bootstrapper) SetupSessions(expires time.Duration, cookieHashKey, cookieBlockKey []byte) {
 	b.Sessions = sessions.New(sessions.Config{
-		Cookie: "SECRET_SESS_COOKIE_" + b.AppName,
-		Expires: expires,
+		Cookie:   "SECRET_SESS_COOKIE_" + b.AppName,
+		Expires:  expires,
 		Encoding: securecookie.New(cookieHashKey, cookieBlockKey),
-	})
-}
-
-// SetupWebsockets prepare the websocket server
-func (b *Bootstrapper) SetupWebsockets(endpoint string, onConnection websocket.ConnectionFunc) {
-	ws := websocket.New(websocket.Config{})
-	ws.OnConnection(onConnection)
-
-	b.Get(endpoint, ws.Handler())
-	b.Any("/iris-ws.js", func(context iris.Context) {
-		context.Write(websocket.ClientSource)
 	})
 }
 
 // SetupErrorHandlers prepares the http error handlers
 // `(context.StatusCodeNotSuccessful`,  which defaults to < 200 || >= 400 but you can change it).
 func (b *Bootstrapper) SetupErrorHandlers() {
-	b.OnErrorCode(response.INTERNAL_SERVER_ERROR, func(ctx context.Context) {
+	b.OnErrorCode(response.INTERNAL_SERVER_ERROR, func(ctx iris.Context) {
 		response.InternalServerErrorResponse(ctx, nil)
 	})
 }
@@ -91,12 +79,12 @@ func (b *Bootstrapper) Configure(cfgs ...Configurator) {
 // Return itself.
 func (b *Bootstrapper) Bootstrap() *Bootstrapper {
 	b.SetupViews("./views")
-	b.SetupSessions(24 * time.Hour, []byte("hr-api"), []byte("hr-api-key"))
+	b.SetupSessions(24*time.Hour, []byte("hr-api"), []byte("hr-api-key"))
 	b.SetupErrorHandlers()
 
 	// static files
 	b.Favicon(StaticAssets + Favicon)
-	b.StaticWeb(StaticAssets[1:len(StaticAssets)-1], StaticAssets)
+	b.HandleDir(StaticAssets[1:len(StaticAssets)-1], StaticAssets)
 
 	// middleware, after static files
 	b.Use(recover.New())

@@ -7,8 +7,8 @@ import (
 	"github.com/berthojoris/cart-backend/bootstrap"
 	"github.com/berthojoris/cart-backend/config"
 	"github.com/iris-contrib/middleware/cors"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
 )
 
 type Route struct {

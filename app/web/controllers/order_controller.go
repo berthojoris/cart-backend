@@ -7,7 +7,7 @@ import (
 	"github.com/berthojoris/cart-backend/app/web/response"
 	"github.com/jinzhu/gorm"
 	golog "github.com/kataras/golog"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 )
 
 type OrderController struct {

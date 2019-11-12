@@ -4,7 +4,7 @@ import (
 	"github.com/berthojoris/cart-backend/app/dto/request"
 	"github.com/berthojoris/cart-backend/app/web/response"
 	"github.com/jinzhu/gorm"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"gopkg.in/go-playground/validator.v9"
 )
 
